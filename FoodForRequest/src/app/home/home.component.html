@@ -1,0 +1,103 @@
+<div class="container">
+
+
+  <div class="hero d-flex flex-column justify-content-center align-items-center h-100 bg-dark-purple">
+    <div class="search-container mx-auto w-100 p-2">
+      <input
+        class="search-input form-control w-100 border-0 rounded-start p-2"
+        type="text"
+        placeholder="Search for food..."
+      />
+      <button
+        class="search-button btn btn-primary rounded-end"
+        type="button"
+      >
+        Search
+      </button>
+    </div>
+    <div class="suggested-searches d-flex justify-content-center align-items-center mt-3 text-sm">
+      <a
+        class="suggested-search ms-2 text-white hover:text-light-purple transition-colors"
+        href="#"
+      >
+        Pizza
+      </a>
+      <a
+        class="suggested-search ms-2 text-white hover:text-light-purple transition-colors"
+        href="#"
+      >
+        Susi
+      </a>
+      <a
+        class="suggested-search ms-2 text-white hover:text-light-purple transition-colors"
+        href="#"
+      >
+        Cake
+      </a>
+    </div>
+  </div>
+  <div class="content p-4">
+    <!-- Additional content goes here -->
+  </div>
+  <h1>Welcome to Food For Request<br></h1><br>
+  <p>Lorem ipsum dolor sit amet, <br>consectetur adipiscing elit.</p>
+  <button mat-raised-button color="primary" routerLink="/register">Get Started</button>
+
+  <!-- Hero Section -->
+  <section class="hero d-flex flex-column justify-content-center align-items-center h-100">
+
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-4" *ngFor="let foodRequest of foodRequests">
+        <div class="card mb-4">
+          <img [src]="foodRequest.imageUrl" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{ foodRequest.name }}</h5>
+            <p class="card-text">{{ foodRequest.description }}</p>
+            <a href="#" class="btn btn-primary">View Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="feature">
+      <mat-icon>local_dining</mat-icon>
+      <h3>Feature Title</h3>
+      <p>Feature description goes here.</p>
+    </div>
+    <div class="feature">
+      <mat-icon>delivery_dining</mat-icon>
+      <h3>Feature Title</h3>
+      <p>Feature description goes here.</p>
+    </div>
+    <div class="feature">
+      <mat-icon>payment</mat-icon>
+      <h3>Feature Title</h3>
+      <p>Feature description goes here.</p>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="how-it-works">
+    <h2>How It Works</h2>
+    <!-- Step-by-step process goes here -->
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials">
+    <h2>Testimonials</h2>
+    <!-- Testimonial cards go here -->
+  </section>
+
+  <!-- Call-to-Action Section -->
+  <section class="call-to-action">
+    <h2>Ready to join?</h2>
+    <p>Sign up now and start creating requests!</p>
+    <button mat-raised-button color="accent" routerLink="/register">Sign Up</button>
+  </section>
+</div>
