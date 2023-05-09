@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FoodRequest } from '../models/foodRequest';
 import { FoodRequestService } from '../services/requestservice';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../models/user';
+//import { User } from '../models/user';
 
 @Component({
   selector: 'app-home',
