@@ -1,7 +1,25 @@
 <div class="container mt-5">
   <h2>Food Requests</h2>
+  <div class="search-container mb-3">
+    <input
+      [(ngModel)]="searchTerm"
+      (input)="searchName()"
+      class="search-input form-control w-100 border-0 rounded-start p-2"
+      type="text"
+      placeholder="Search for food requests in Name..."
+    />
+  </div>
+  <div class="search-container mb-3">
+    <input
+      [(ngModel)]="searchTerm"
+      (input)="searchDescription()"
+      class="search-input form-control w-100 border-0 rounded-start p-2"
+      type="text"
+      placeholder="Search for food requests in Description..."
+    />
+  </div>
   <div class="row">
-    <div class="col-md-4" *ngFor="let request of requests">
+    <div class="col-md-4" *ngFor="let request of filteredRequests">
       <div class="card mb-4">
         <img [src]="request.imageUrl" class="card-img-top" alt="...">
         <div class="card-body">
@@ -13,3 +31,4 @@
     </div>
   </div>
 </div>
+

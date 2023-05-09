@@ -10,6 +10,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class RequestListComponent implements OnInit {
   requests: FoodRequest[] = [];
+  filteredRequests: FoodRequest[] = [];
+  searchTerm: string = '';
 
   constructor(private FoodRequestService: FoodRequestService) { }
 
@@ -20,6 +22,21 @@ export class RequestListComponent implements OnInit {
   getAll(): void {
     this.FoodRequestService.getAll().subscribe((requests: FoodRequest[]) => {
       this.requests = requests;
+      this.filteredRequests = requests;
     });
   }
+
+
+  searchName(): void {
+    this.filteredRequests = this.requests.filter((request) =>
+      request.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+
+  searchDescription(): void {
+    this.filteredRequests = this.requests.filter((request) =>
+      request.description.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+
 }
