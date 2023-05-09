@@ -4,6 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '../app-routing.module';
 
+import { AuthService, User } from 'src/app/services/auth.service';
+
+import { Location } from '@angular/common';
+
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -13,5 +18,9 @@ import { AppRoutingModule } from '../app-routing.module';
 
 
 export class NavbarComponent {
+  constructor(public authService: AuthService) {}
 
+  logout() {
+    this.authService.doLogout();
+}
 }
