@@ -37,11 +37,20 @@ export type RegisterRequest = {
     providedIn: 'root',
 })
 export class AuthService {
-    headers = new HttpHeaders().set('Content-Type', 'application/json');
+    //headers = new HttpHeaders().set('Content-Type', 'application/json');
     public currentUser: User | undefined = undefined;
     loading = false;
     signInError = '';
     constructor(private http: HttpClient, public router: Router) {}
+
+    get headers(): HttpHeaders {
+      const token = localStorage.getItem('token');
+      return new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      });
+    }
+
 
     // Sign-up
     signUp(user: RegisterRequest): Observable<any> {
