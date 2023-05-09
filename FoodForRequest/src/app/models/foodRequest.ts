@@ -1,4 +1,6 @@
 //import { User } from "./user";
+
+import { User } from "../services/auth.service";
 /*
 /// src/app/models/food-request.model.ts
 export class FoodRequest {
@@ -10,14 +12,14 @@ export class FoodRequest {
  public imageUrl: string ="";
  public pictureContentType: string ="";
  public requestorId: string="";
- public requestor: User  = new User();
+ public requestor: User  ;
  public offers: string =""
 
 
 
 
-}
-*/export class FoodRequest {
+}*/
+export class FoodRequest {
 
   public id: string = "";
  public name: string= "";

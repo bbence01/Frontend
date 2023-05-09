@@ -14,6 +14,9 @@ import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
+//import { User } from '../models/user';
+
+
 export type User = {
     admin: boolean;
     email: string;

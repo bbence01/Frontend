@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FoodRequest } from '../models/foodRequest';
-import { FoodRequestService } from '../services/requestservice';
+import { FoodRequestService } from '../services/foodRequestService';
 import { HttpClient } from '@angular/common/http';
 //import { User } from '../models/user';
 
