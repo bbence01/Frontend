@@ -28,12 +28,15 @@ export class FoodRequestService {
       })
       .pipe(
         map((data: any[]) => {
-          let requests = data.map((request) => ({ ...request }));
+          let requests = data.map((request) => Object.assign(new FoodRequest(), request));
+          console.log('Received requests:', requests);
           return requests;
         }),
-
       );
   }
+
+
+
 
   getOne(id: number): Observable<FoodRequest> {
     return this.http.get<FoodRequest>(`${this.FoodRequest}/${id}`);
@@ -60,12 +63,12 @@ export class FoodRequestService {
       })
       .pipe(
         map((data: any[]) => {
-          let ingredients = data.map((ingredient) => ({ ...ingredient }));
+          let ingredients = data.map((ingredient) => Object.assign(new Ingredient(), ingredient));
+          console.log('Received ingredients:', ingredients);
           return ingredients;
         }),
       );
   }
-
 
 
   addIngredientsToRequest(requestId: string, ingredients: Ingredient[]): Observable<FoodRequest> {

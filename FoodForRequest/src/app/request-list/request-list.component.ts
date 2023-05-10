@@ -37,11 +37,9 @@ export class RequestListComponent implements OnInit {
       this.FoodRequestService.getAll(),
       this.FoodRequestService.getIngredients(),
     ]).subscribe(([requests, ingredients]) => {
-      this.requests = requests.map((request) => ({ ...request }));
-      this.filteredRequests = [...this.requests];
-      this.ingredients = ingredients.map((ingredient) => ({ ...ingredient }));
-
-      console.log('Pairing ingredients to food');
+      this.requests = requests;
+      this.filteredRequests = requests;
+      this.ingredients = ingredients;
       this.pairIngredientsToFood();
     });
   }
@@ -117,11 +115,14 @@ export class RequestListComponent implements OnInit {
 
         if (request) {
           request.ingredients.push(ing);
-          console.log('Updated request:', request);
+          console.log('Updated request:', request.id);
+          console.log('Matching request found for ingredient:', ing);
         } else {
           console.log('No matching request found for ingredient:', ing);
         }
       });
+      console.log('Ingredients:', this.ingredients);
+      console.log('Requests:', this.requests);
     }
   }
 
