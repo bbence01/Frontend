@@ -28,7 +28,7 @@ export class FoodRequest {
  public imageUrl: string ="";
  public ingredients: Ingredient[] =[];
  public offers: Offer[] =[];
- public comments: Comment[] =[];
+ public comments: CommentF[] =[];
 
 }
 
@@ -43,14 +43,14 @@ export class Offer{
 
 
   id: string = '';
-  choosen: string = '';
+  choosen: boolean = false;
   foodId: string='';
   contractorId: string='';
 
 
 }
 
-export class Comment{
+export class CommentF{
 
 
   id: string = '';
