@@ -1,5 +1,19 @@
 <div class="container mt-5">
   <h2>Food Requests</h2>
+
+  <div class="search-container">
+    <select
+      [(ngModel)]="selectedIngredient"
+      (change)="filterRequests()"
+      class="form-select me-2"
+    >
+      <option [ngValue]="null">All Ingredients</option>
+      <option *ngFor="let ingredient of ingredients" [ngValue]="ingredient">
+        {{ ingredient.name }}
+      </option>
+    </select>
+  </div>
+
   <div class="search-container mb-3">
     <input
       [(ngModel)]="searchTerm"

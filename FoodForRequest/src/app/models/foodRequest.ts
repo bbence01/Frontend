@@ -26,10 +26,12 @@ export class FoodRequest {
  public description: string= "";
  public requestorId: string="";
  public imageUrl: string ="";
+ public ingredients: Ingredient[] =[];
+}
 
-
-
-
-
-
+export class Ingredient {
+  id: string = '';
+  description: string = '';
+  name: string='';
+  foodid: string='';
 }
