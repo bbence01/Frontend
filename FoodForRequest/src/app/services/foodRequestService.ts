@@ -86,7 +86,7 @@ export class FoodRequestService {
   }
 
   getRequests(): Observable<FoodRequest[]> {
-    const apiUrl = `${environment.apiUrl}/food-requests`; // Update this path to match your backend API endpoint
+    const apiUrl = `${environment.apiUrl}/Foodrequests`; // Update this path to match your backend API endpoint
     return this.http.get<FoodRequest[]>(apiUrl);
   }
 
@@ -108,7 +108,7 @@ export class FoodRequestService {
 
   getComments(): Observable<CommentF[]> {
     return this.http
-      .get<Ingredient[]>(`${environment.apiUrl}Comments/GetAll`, {
+      .get<Ingredient[]>(`${environment.apiUrl}Comment/GetAll`, {
         headers: this.headers,
       })
       .pipe(
@@ -127,7 +127,7 @@ export class FoodRequestService {
   }
   getOffers(): Observable<Offer[]> {
     return this.http
-      .get<Ingredient[]>(`${environment.apiUrl}Comments/GetAll`, {
+      .get<Ingredient[]>(`${environment.apiUrl}Comment/GetAll`, {
         headers: this.headers,
       })
       .pipe(
@@ -148,31 +148,31 @@ export class FoodRequestService {
 
 
   getOffersByRequestId(requestId: string): Observable<Offer[]> {
-    return this.http.get<Offer[]>(`${environment.apiUrl}offers?requestId=${requestId}`, {
+    return this.http.get<Offer[]>(`${environment.apiUrl}Offer/GetOffersForRequest/${requestId}`, {
       headers: this.headers,
     });
   }
 
   getCommentsByRequestId(requestId: string): Observable<CommentF[]> {
-    return this.http.get<CommentF[]>(`${environment.apiUrl}comments?requestId=${requestId}`, {
+    return this.http.get<CommentF[]>(`${environment.apiUrl}Comment/GetCommentsForRequest/${requestId}`, {
       headers: this.headers,
     });
   }
 
   createOffer(offer: Offer): Observable<Offer> {
-    return this.http.post<Offer>(`${environment.apiUrl}offers`, offer, {
+    return this.http.post<Offer>(`${environment.apiUrl}Offer`, offer, {
       headers: this.headers,
     });
   }
 
   createComment(comment: CommentF): Observable<CommentF> {
-    return this.http.post<CommentF>(`${environment.apiUrl}comments`, comment, {
+    return this.http.post<CommentF>(`${environment.apiUrl}Comment`, comment, {
       headers: this.headers,
     });
   }
 
   updateRequest(request: FoodRequest): Observable<FoodRequest> {
-    return this.http.put<FoodRequest>(`${environment.apiUrl}foodrequests/${request.id}`, request, {
+    return this.http.put<FoodRequest>(`${environment.apiUrl}Foodrequest/${request.id}`, request, {
       headers: this.headers,
     });
   }

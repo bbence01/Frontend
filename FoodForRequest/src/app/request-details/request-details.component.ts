@@ -84,7 +84,25 @@ export class RequestDetailsComponent implements OnInit {
 
   makeOffer(request: FoodRequest): void {
 
-    let offer = new Offer()
+    let offer = new Offer(
+
+    )
+
+    if (this.request) {
+      this.authService.getUserProfile()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
+          (currentUser: User) => {
+            offer.contractorId = currentUser.id
+          },
+          (error) => {
+            console.error('Error fetching user profile:', error);
+          }
+        );
+    }
+
+    offer.foodId =  request.id
+    offer.choosen = false
 
     // Implement a function in your foodRequestService to create an offer
     this.foodRequestService.createOffer(offer).subscribe(createdOffer => {
