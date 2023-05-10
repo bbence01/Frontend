@@ -31,15 +31,17 @@ export class RequestListComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
-    forkJoin({
-      requests: this.FoodRequestService.getAll(),
-      ingredients: this.FoodRequestService.getIngredients(),
-    }).subscribe(({ requests, ingredients }) => {
-      this.requests = requests;
-      this.filteredRequests = requests;
-      this.ingredients = ingredients;
 
+  ngOnInit(): void {
+    forkJoin([
+      this.FoodRequestService.getAll(),
+      this.FoodRequestService.getIngredients(),
+    ]).subscribe(([requests, ingredients]) => {
+      this.requests = requests.map((request) => ({ ...request }));
+      this.filteredRequests = [...this.requests];
+      this.ingredients = ingredients.map((ingredient) => ({ ...ingredient }));
+
+      console.log('Pairing ingredients to food');
       this.pairIngredientsToFood();
     });
   }
@@ -103,22 +105,28 @@ export class RequestListComponent implements OnInit {
   }
 
 
-   pairIngredientsToFood() {
-    console.log(this.ingredients);
-    console.log(this.requests);
+  pairIngredientsToFood() {
+    console.log('Ingredients:', this.ingredients);
+    console.log('Requests:', this.requests);
+
     if (this.requests.length > 0 && this.ingredients.length > 0) {
       this.ingredients.forEach(ing => {
-        const product = this.requests.find(product => product.id === ing.foodid );
-        if (product) {
-          product.ingredients.push(ing);
-          console.log(product);
+        console.log('Ingredient:', ing);
+        const request = this.requests.find(request => request.id === ing.foodid);
+        console.log('Matching request:', request);
+
+        if (request) {
+          request.ingredients.push(ing);
+          console.log('Updated request:', request);
+        } else {
+          console.log('No matching request found for ingredient:', ing);
         }
-      })
-      ;
-
+      });
     }
-
   }
+
+
+
 
 
 

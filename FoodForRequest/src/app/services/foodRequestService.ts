@@ -16,9 +16,23 @@ export class FoodRequestService {
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient) { }
-
+/*
   getAll(): Observable<FoodRequest[]> {
     return this.http.get<FoodRequest[]>(this.apiUrlGetAll);
+  }*/
+
+  getAll(): Observable<FoodRequest[]> {
+    return this.http
+      .get<FoodRequest[]>(`${environment.apiUrl}FoodRequest/GetAll`, {
+        headers: this.headers,
+      })
+      .pipe(
+        map((data: any[]) => {
+          let requests = data.map((request) => ({ ...request }));
+          return requests;
+        }),
+
+      );
   }
 
   getOne(id: number): Observable<FoodRequest> {
@@ -40,15 +54,18 @@ export class FoodRequestService {
 
 
   getIngredients(): Observable<Ingredient[]> {
-    let api = `${this.apiIngred}/GetAll`;
-    return this.http.get<Ingredient[]>(api).pipe(
-      map((res) => {
-        return res as Ingredient[];
-      }),
-
-    );
-
+    return this.http
+      .get<Ingredient[]>(`${environment.apiUrl}Ingridient/GetAll`, {
+        headers: this.headers,
+      })
+      .pipe(
+        map((data: any[]) => {
+          let ingredients = data.map((ingredient) => ({ ...ingredient }));
+          return ingredients;
+        }),
+      );
   }
+
 
 
   addIngredientsToRequest(requestId: string, ingredients: Ingredient[]): Observable<FoodRequest> {
