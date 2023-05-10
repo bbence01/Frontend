@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map } from 'rxjs';
-import { FoodRequest, Ingredient } from '../models/foodRequest';
+import { CommentF, FoodRequest, Ingredient, FoodUser, Offer } from '../models/foodRequest';
 import { environment } from '../../environments/environment';
 import { HttpHeaders } from '@angular/common/http';
 
@@ -106,5 +106,74 @@ export class FoodRequestService {
   }
 
 
+  getComments(): Observable<CommentF[]> {
+    return this.http
+      .get<Ingredient[]>(`${environment.apiUrl}Comments/GetAll`, {
+        headers: this.headers,
+      })
+      .pipe(
+        map((data: any[]) => {
+          let comments = data.map((comment) => {
+            const ing = new CommentF();
+            ing.id = comment.id;
+            ing.text = comment.text;
+            ing.contractorId = comment.contractorId;
+            ing.requestId = comment.requestId; // <-- Update this line
+            return ing;
+          });
+          return comments;
+        }),
+      );
+  }
+  getOffers(): Observable<Offer[]> {
+    return this.http
+      .get<Ingredient[]>(`${environment.apiUrl}Comments/GetAll`, {
+        headers: this.headers,
+      })
+      .pipe(
+        map((data: any[]) => {
+          let offers = data.map((offer) => {
+            const ing = new Offer();
+            ing.id = offer.id;
+            ing.choosen = offer.choosen;
+            ing.contractorId = offer.contractorId;
+            ing.foodId = offer.foodId; // <-- Update this line
+            return ing;
+          });
+          return offers;
+        }),
+      );
+  }
 
+
+
+  getOffersByRequestId(requestId: string): Observable<Offer[]> {
+    return this.http.get<Offer[]>(`${environment.apiUrl}offers?requestId=${requestId}`, {
+      headers: this.headers,
+    });
+  }
+
+  getCommentsByRequestId(requestId: string): Observable<CommentF[]> {
+    return this.http.get<CommentF[]>(`${environment.apiUrl}comments?requestId=${requestId}`, {
+      headers: this.headers,
+    });
+  }
+
+  createOffer(offer: Offer): Observable<Offer> {
+    return this.http.post<Offer>(`${environment.apiUrl}offers`, offer, {
+      headers: this.headers,
+    });
+  }
+
+  createComment(comment: CommentF): Observable<CommentF> {
+    return this.http.post<CommentF>(`${environment.apiUrl}comments`, comment, {
+      headers: this.headers,
+    });
+  }
+
+  updateRequest(request: FoodRequest): Observable<FoodRequest> {
+    return this.http.put<FoodRequest>(`${environment.apiUrl}foodrequests/${request.id}`, request, {
+      headers: this.headers,
+    });
+  }
 }

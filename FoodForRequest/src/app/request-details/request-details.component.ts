@@ -16,11 +16,12 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./request-details.component.scss']
 })
 export class RequestDetailsComponent implements OnInit {
-  request: FoodRequest | undefined;
+  request: FoodRequest = new FoodRequest();
   isRequestOwner: boolean = false;
   offers: Offer[] = [];
-  comments: Comment[] = [];
+  comments: CommentF[] = [];
   private destroy$ = new Subject<void>();
+  newComment: string = '';
 
 
   constructor(
@@ -64,6 +65,8 @@ export class RequestDetailsComponent implements OnInit {
     }
   }
 
+
+
   // Implement other functions for making an offer, adding a comment, and editing request details
   loadOffers(requestId: string): void {
     // Implement a function in your foodRequestService to fetch offers by requestId
@@ -79,24 +82,46 @@ export class RequestDetailsComponent implements OnInit {
     });
   }
 
-  makeOffer(offer: Offer): void {
+  makeOffer(request: FoodRequest): void {
+
+    let offer = new Offer()
+
     // Implement a function in your foodRequestService to create an offer
     this.foodRequestService.createOffer(offer).subscribe(createdOffer => {
       this.offers.push(createdOffer);
     });
   }
 
-  addComment(comment: Comment): void {
+  addComment(request:FoodRequest, text: String): void {
+
+    let comment = new CommentF(
+
+
+    )
+
     // Implement a function in your foodRequestService to create a comment
     this.foodRequestService.createComment(comment).subscribe(createdComment => {
       this.comments.push(createdComment);
     });
   }
 
-  editRequest(editedRequest: FoodRequest): void {
-    // Implement a function in your foodRequestService to update a request
-    this.foodRequestService.updateRequest(editedRequest).subscribe(updatedRequest => {
-      this.request = updatedRequest;
-    });
+  getRequest(): void {
+    const requestId = this.route.snapshot.paramMap.get('id');
+    if (requestId) {
+      this.foodRequestService.getRequestById(requestId).subscribe((request) => {
+        this.request = request;
+        this.checkRequestOwner();
+      });
+    }
   }
+
+  acceptOffer(offer: any): void {
+    // Implement your logic to accept the offer here
+  }
+  editRequest(request: FoodRequest): void {
+    // Implement your logic to edit the request here
+  }
+
+
+
 }

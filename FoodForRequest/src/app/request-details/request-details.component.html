@@ -11,8 +11,17 @@
   </div>
 
   <div class="actions">
-    <button *ngIf="isRequestOwner" (click)="editRequest()">Edit Request</button>
-    <button (click)="makeOffer()">Make an Offer</button>
+    <button *ngIf="isRequestOwner" (click)="editRequest(request)">Edit Request</button>
+    <button (click)="makeOffer(request)">Make an Offer</button>
+  </div>
+
+
+  <div class="offers" *ngIf="isRequestOwner">
+    <h2>Offers</h2>
+    <div class="offer" *ngFor="let offer of request.offers">
+      <p>{{ offer.id }}</p>
+      <button (click)="acceptOffer(offer)">Accept Offer</button> <!-- Add the argument 'offer' here -->
+    </div>
   </div>
 
   <div class="comments">
@@ -22,14 +31,6 @@
       <span class="author">By: {{ comment.id }}</span>
     </div>
     <textarea [(ngModel)]="newComment" placeholder="Add a comment..."></textarea>
-    <button (click)="addComment()">Submit</button>
-  </div>
-
-  <div class="offers" *ngIf="isRequestOwner">
-    <h2>Offers</h2>
-    <div class="offer" *ngFor="let offer of request.offers">
-      <p>{{ offer.id }}</p>
-      <button (click)="acceptOffer(offer)">Accept Offer</button>
-    </div>
+    <button (click)="addComment(request, newComment)">Submit</button>
   </div>
 </div>
