@@ -15,7 +15,7 @@ const routes: Routes = [
 
     { path: 'request-list', component: RequestListComponent },
 
-    { path: '', component: RequestListComponent },
+  //  { path: '', component: RequestListComponent },
     { path: 'request/:id', component: RequestDetailsComponent },
 
 ];

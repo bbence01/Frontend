@@ -28,7 +28,7 @@
     <h2>Available Requests</h2>
 
     <div class="request-list">
-      <div class="request-card" *ngFor="let request of filteredRequests">
+      <div class="request-card" *ngFor="let request of filteredRequests" [routerLink]="['/request', request.id]" >
         <img [src]="request.imageUrl || 'https://via.placeholder.com/300x200'" />
         <h3>{{ request.name }}</h3>
         <p>{{ request.description }}</p>
@@ -37,7 +37,7 @@
             {{ ingredient.name }}
           </span>
         </div>
-        <a href="'request/:id'"  class="btn btn-dark">View Details</a>
+        <a  [routerLink]="['/request', request.id]" class="btn btn-dark">View Details</a>
       </div>
     </div>
   </div>
