@@ -27,6 +27,9 @@ export class FoodRequest {
  public requestorId: string="";
  public imageUrl: string ="";
  public ingredients: Ingredient[] =[];
+
+
+
 }
 
 export class Ingredient {

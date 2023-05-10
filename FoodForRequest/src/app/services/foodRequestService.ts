@@ -14,6 +14,11 @@ export class FoodRequestService {
   private FoodRequest = 'http://localhost:5274/api/Foodrequest';
   private apiIngred = 'http://localhost:5274/api/Ingridient';
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  requests: FoodRequest[] = []
+  filteredRequests: FoodRequest[] = [];
+  searchTerm: string = '';
+  ingredients: Ingredient[] =[]
+
 
   constructor(private http: HttpClient) { }
 /*
@@ -28,14 +33,44 @@ export class FoodRequestService {
       })
       .pipe(
         map((data: any[]) => {
-          let requests = data.map((request) => Object.assign(new FoodRequest(), request));
-          console.log('Received requests:', requests);
-          return requests;
+          this.requests = data.map((request) => {
+            const req = new FoodRequest();
+            req.id = request.id;
+            req.name = request.name;
+            req.description = request.description;
+            req.requestorId = request.requestorId;
+            req.imageUrl = "";
+            req.ingredients = [];
+            return req;
+          });
+          return this.requests;
         }),
       );
   }
 
 
+
+
+
+  getIngredients(): Observable<Ingredient[]> {
+    return this.http
+      .get<Ingredient[]>(`${environment.apiUrl}Ingridient/GetAll`, {
+        headers: this.headers,
+      })
+      .pipe(
+        map((data: any[]) => {
+          let ingredients = data.map((ingredient) => {
+            const ing = new Ingredient();
+            ing.id = ingredient.id;
+            ing.description = ingredient.description;
+            ing.name = ingredient.name;
+            ing.foodid = ingredient.foodId; // <-- Update this line
+            return ing;
+          });
+          return ingredients;
+        }),
+      );
+  }
 
 
   getOne(id: number): Observable<FoodRequest> {
@@ -54,22 +89,6 @@ export class FoodRequestService {
     const apiUrl = `${environment.apiUrl}/food-requests`; // Update this path to match your backend API endpoint
     return this.http.get<FoodRequest[]>(apiUrl);
   }
-
-
-  getIngredients(): Observable<Ingredient[]> {
-    return this.http
-      .get<Ingredient[]>(`${environment.apiUrl}Ingridient/GetAll`, {
-        headers: this.headers,
-      })
-      .pipe(
-        map((data: any[]) => {
-          let ingredients = data.map((ingredient) => Object.assign(new Ingredient(), ingredient));
-          console.log('Received ingredients:', ingredients);
-          return ingredients;
-        }),
-      );
-  }
-
 
   addIngredientsToRequest(requestId: string, ingredients: Ingredient[]): Observable<FoodRequest> {
     const api = `${environment.apiUrl}Ingridient/${requestId}/addIngredients`;

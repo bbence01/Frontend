@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FoodRequest, Ingredient  } from '../models/foodRequest';
 import { FoodRequestService } from '../services/foodRequestService';
 import { HttpClient } from '@angular/common/http';
-import { forkJoin } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { of } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-request-list',
@@ -16,13 +18,23 @@ export class RequestListComponent implements OnInit {
   searchTerm: string = '';
   ingredients: Ingredient[]
   selectedIngredient: Ingredient =  new Ingredient;
+  http: HttpClient
 
-  constructor(private FoodRequestService: FoodRequestService) {
+  constructor(http: HttpClient,private FoodRequestService: FoodRequestService) {
+    this.http = http
 
-    this.requests = []
     this.ingredients =[]
     this.filteredRequests=[]
+    console.log('Ingredients:', this.ingredients);
 
+   // this.getIngredients()
+
+    this.requests = []
+
+    console.log('Requests:', this.requests);
+   // this.getAll()
+
+  this.pairIngredientsToFood()
 
 
 
@@ -36,6 +48,9 @@ export class RequestListComponent implements OnInit {
     forkJoin([
       this.FoodRequestService.getAll(),
       this.FoodRequestService.getIngredients(),
+
+
+
     ]).subscribe(([requests, ingredients]) => {
       this.requests = requests;
       this.filteredRequests = requests;
@@ -43,6 +58,63 @@ export class RequestListComponent implements OnInit {
       this.pairIngredientsToFood();
     });
   }
+
+
+//ngOnInit(): void { }
+/*
+  public getIngredients() {
+    this.http.get<any>('http://localhost:5274/api/Ingridient/GetAll')
+    .subscribe(resp => {
+      resp.ingredients.map((x:any) => {
+
+        let i = new Ingredient()
+
+        i.id = x.id
+        i.name =x.name
+        i.description =x.description
+        i.foodid =x.foodId
+
+        this.ingredients.push(i)
+      })
+    })
+  }
+
+
+
+
+
+  public getAll() {
+    this.http.get<any>('http://localhost:5274/api/Foodrequest/GetAll')
+    .subscribe(resp => {
+      resp.requests.map((x:any) => {
+
+        let u = new FoodRequest()
+
+        u.id = x.id
+        u.name = x.name
+        u.description = x.description
+        u.requestorId =x.requestorId
+
+        const ingr = this.ingredients.find(c => c.foodid === u.id)
+        if(ingr != undefined)
+        {
+        u.ingredients.push(ingr)
+        }
+
+
+        this.requests.push(u)
+      })
+    })
+  }*/
+
+
+
+
+
+
+
+
+
 
 
   searchName(): void {
@@ -111,11 +183,11 @@ export class RequestListComponent implements OnInit {
       this.ingredients.forEach(ing => {
         console.log('Ingredient:', ing);
         const request = this.requests.find(request => request.id === ing.foodid);
-        console.log('Matching request:', request);
+        console.log('Matching request:', ing.foodid);
 
         if (request) {
           request.ingredients.push(ing);
-          console.log('Updated request:', request.id);
+
           console.log('Matching request found for ingredient:', ing);
         } else {
           console.log('No matching request found for ingredient:', ing);
