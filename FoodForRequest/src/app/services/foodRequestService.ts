@@ -100,4 +100,11 @@ export class FoodRequestService {
     );
   }
 
+
+  getRequestById(id: string): Observable<FoodRequest> {
+    return this.http.get<FoodRequest>(`${this.FoodRequest}/${id}`);
+  }
+
+
+
 }

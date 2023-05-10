@@ -4,7 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
 import { RequestListComponent } from './request-list/request-list.component';
-
+import { RequestDetailsComponent } from './request-details/request-details.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,6 +15,8 @@ const routes: Routes = [
 
     { path: 'request-list', component: RequestListComponent },
 
+    { path: '', component: RequestListComponent },
+    { path: 'request/:id', component: RequestDetailsComponent },
 
 ];
 

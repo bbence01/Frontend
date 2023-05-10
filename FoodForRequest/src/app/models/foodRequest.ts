@@ -27,8 +27,8 @@ export class FoodRequest {
  public requestorId: string="";
  public imageUrl: string ="";
  public ingredients: Ingredient[] =[];
-
-
+ public offers: Offer[] =[];
+ public comments: Comment[] =[];
 
 }
 
@@ -37,4 +37,35 @@ export class Ingredient {
   description: string = '';
   name: string='';
   foodid: string='';
+}
+
+export class Offer{
+
+
+  id: string = '';
+  choosen: string = '';
+  foodId: string='';
+  contractorId: string='';
+
+
+}
+
+export class Comment{
+
+
+  id: string = '';
+  text: string = '';
+  requestId: string='';
+  contractorId: string='';
+
+}
+
+export class FoodUser{
+
+
+  id: string = '';
+  email: string = '';
+  foodUserName: string='';
+  userName: string='';
+
 }

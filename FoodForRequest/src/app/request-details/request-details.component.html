@@ -1,1 +1,35 @@
-<p>request-details works!</p>
+<div class="container">
+  <div class="request-details">
+    <img [src]="request.imageUrl || 'https://via.placeholder.com/300x200'" />
+    <h2>{{ request.name }}</h2>
+    <p>{{ request.description }}</p>
+    <div class="ingredients">
+      <span class="ingredient" *ngFor="let ingredient of request.ingredients">
+        {{ ingredient.name }}
+      </span>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button *ngIf="isRequestOwner" (click)="editRequest()">Edit Request</button>
+    <button (click)="makeOffer()">Make an Offer</button>
+  </div>
+
+  <div class="comments">
+    <h2>Comments</h2>
+    <div class="comment" *ngFor="let comment of request.comments">
+      <p>{{ comment.text }}</p>
+      <span class="author">By: {{ comment.id }}</span>
+    </div>
+    <textarea [(ngModel)]="newComment" placeholder="Add a comment..."></textarea>
+    <button (click)="addComment()">Submit</button>
+  </div>
+
+  <div class="offers" *ngIf="isRequestOwner">
+    <h2>Offers</h2>
+    <div class="offer" *ngFor="let offer of request.offers">
+      <p>{{ offer.id }}</p>
+      <button (click)="acceptOffer(offer)">Accept Offer</button>
+    </div>
+  </div>
+</div>

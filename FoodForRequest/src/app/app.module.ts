@@ -14,7 +14,6 @@ import { RequestListComponent } from './request-list/request-list.component';
 import { RequestDetailsComponent } from './request-details/request-details.component';
 import { AuthInterceptor } from '../app/shared/authconfig.interceptor';
 
-
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
