@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FoodRequest, Ingredient  } from '../models/foodRequest';
+import { FoodRequest, Ingredient, CommentF,Offer  } from '../models/foodRequest';
 import { FoodRequestService } from '../services/foodRequestService';
 import { HttpClient } from '@angular/common/http';
 import { Observable, forkJoin } from 'rxjs';
@@ -18,11 +18,14 @@ export class RequestListComponent implements OnInit {
   searchTerm: string = '';
   ingredients: Ingredient[]
   selectedIngredient: Ingredient =  new Ingredient;
+  offers: Offer[]
+  commentsf: CommentF[]
   http: HttpClient
 
   constructor(http: HttpClient,private FoodRequestService: FoodRequestService) {
     this.http = http
-
+    this.offers =[]
+    this.commentsf=[]
     this.ingredients =[]
     this.filteredRequests=[]
     console.log('Ingredients:', this.ingredients);
@@ -33,7 +36,8 @@ export class RequestListComponent implements OnInit {
 
     console.log('Requests:', this.requests);
    // this.getAll()
-
+   console.log('Comment:', this.commentsf);
+   console.log('Offers:', this.offers);
   this.pairIngredientsToFood()
 
 
@@ -48,14 +52,22 @@ export class RequestListComponent implements OnInit {
     forkJoin([
       this.FoodRequestService.getAll(),
       this.FoodRequestService.getIngredients(),
+      this.FoodRequestService.getOffers(),
+      this.FoodRequestService.getComments(),
 
 
 
-    ]).subscribe(([requests, ingredients]) => {
+
+
+    ]).subscribe(([requests, ingredients,offers,commentsf ]) => {
       this.requests = requests;
       this.filteredRequests = requests;
       this.ingredients = ingredients;
+      this.offers = offers;
+      this.commentsf = commentsf;
       this.pairIngredientsToFood();
+      this.pairCommentsToFood();
+      this.pairOffesToFood();
     });
   }
 
@@ -199,6 +211,51 @@ export class RequestListComponent implements OnInit {
   }
 
 
+  pairCommentsToFood() {
+    console.log('Comments:', this.commentsf);
+    console.log('Requests:', this.requests);
+
+    if (this.requests.length > 0 && this.commentsf.length > 0) {
+      this.commentsf.forEach(ing => {
+        console.log('Ingredient:', ing);
+        const request = this.requests.find(request => request.id === ing.requestId);
+        console.log('Matching request:', ing.requestId);
+
+        if (request) {
+          request.comments.push(ing);
+
+          console.log('Matching request found for ingredient:', ing);
+        } else {
+          console.log('No matching request found for ingredient:', ing);
+        }
+      });
+      console.log('comments:', this.commentsf);
+      console.log('Requests:', this.requests);
+    }
+  }
+
+  pairOffesToFood() {
+    console.log('Offers:', this.offers);
+    console.log('Requests:', this.requests);
+
+    if (this.requests.length > 0 && this.offers.length > 0) {
+      this.offers.forEach(ing => {
+        console.log('Ingredient:', ing);
+        const request = this.requests.find(request => request.id === ing.foodId);
+        console.log('Matching request:', ing.foodId);
+
+        if (request) {
+          request.offers.push(ing);
+
+          console.log('Matching request found for ingredient:', ing);
+        } else {
+          console.log('No matching request found for ingredient:', ing);
+        }
+      });
+      console.log('Offers:', this.offers);
+      console.log('Requests:', this.requests);
+    }
+  }
 
 
 

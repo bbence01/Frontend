@@ -38,8 +38,13 @@ export class FoodRequestService {
             req.id = request.id;
             req.name = request.name;
             req.description = request.description;
+            req.payment = request.payment;
+            req.isDone = request.isDone;
+            req.inProgress = request.inProgress;
+            req.deliveryoptions = request.deliveryoptions;
+
             req.requestorId = request.requestorId;
-            req.imageUrl = "";
+            req.imageUrl = request.pictureURL;
             req.ingredients = [];
             return req;
           });
@@ -64,7 +69,7 @@ export class FoodRequestService {
             ing.id = ingredient.id;
             ing.description = ingredient.description;
             ing.name = ingredient.name;
-            ing.foodid = ingredient.foodId; // <-- Update this line
+            ing.foodid = ingredient.foodId;
             return ing;
           });
           return ingredients;
@@ -108,7 +113,7 @@ export class FoodRequestService {
 
   getComments(): Observable<CommentF[]> {
     return this.http
-      .get<Ingredient[]>(`${environment.apiUrl}Comment/GetAll`, {
+      .get<CommentF[]>(`${environment.apiUrl}Comment/GetAll`, {
         headers: this.headers,
       })
       .pipe(
@@ -127,7 +132,7 @@ export class FoodRequestService {
   }
   getOffers(): Observable<Offer[]> {
     return this.http
-      .get<Ingredient[]>(`${environment.apiUrl}Comment/GetAll`, {
+      .get<Offer[]>(`${environment.apiUrl}Offer/all`, {
         headers: this.headers,
       })
       .pipe(
@@ -136,8 +141,9 @@ export class FoodRequestService {
             const ing = new Offer();
             ing.id = offer.id;
             ing.choosen = offer.choosen;
-            ing.contractorId = offer.contractorId;
             ing.foodId = offer.foodId; // <-- Update this line
+            ing.contractorId = offer.contractorId;
+
             return ing;
           });
           return offers;
@@ -145,7 +151,11 @@ export class FoodRequestService {
       );
   }
 
-
+  getIngredientssByRequestId(requestId: string): Observable<Ingredient[]> {
+    return this.http.get<Ingredient[]>(`${environment.apiUrl}Ingridient/GetIngredientsForRequest/${requestId}`, {
+      headers: this.headers,
+    });
+  }
 
   getOffersByRequestId(requestId: string): Observable<Offer[]> {
     return this.http.get<Offer[]>(`${environment.apiUrl}Offer/GetOffersForRequest/${requestId}`, {

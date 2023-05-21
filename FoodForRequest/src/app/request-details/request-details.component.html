@@ -4,7 +4,7 @@
     <h2>{{ request.name }}</h2>
     <p>{{ request.description }}</p>
     <div class="ingredients">
-      <span class="ingredient" *ngFor="let ingredient of request.ingredients">
+      <span class="ingredient" *ngFor="let ingredient of ingredients">
         {{ ingredient.name }}
       </span>
     </div>
@@ -15,10 +15,16 @@
     <button (click)="makeOffer(request)">Make an Offer</button>
   </div>
 
+  <div>
+    <button (click)="createOffer()">New Offer</button>
+
+
+  </div>
+
 
   <div class="offers" *ngIf="isRequestOwner">
     <h2>Offers</h2>
-    <div class="offer" *ngFor="let offer of request.offers">
+    <div class="offer" *ngFor="let offer of offers">
       <p>{{ offer.id }}</p>
       <button (click)="acceptOffer(offer)">Accept Offer</button> <!-- Add the argument 'offer' here -->
     </div>
@@ -26,7 +32,7 @@
 
   <div class="comments">
     <h2>Comments</h2>
-    <div class="comment" *ngFor="let comment of request.comments">
+    <div class="comment" *ngFor="let comment of comments">
       <p>{{ comment.text }}</p>
       <span class="author">By: {{ comment.id }}</span>
     </div>

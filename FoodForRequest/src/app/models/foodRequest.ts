@@ -24,6 +24,10 @@ export class FoodRequest {
   public id: string = "";
  public name: string= "";
  public description: string= "";
+ public payment: number =0;
+ public isDone: boolean =  false;
+ public inProgress: boolean =  false;
+ public deliveryoptions: string= "";
  public requestorId: string="";
  public imageUrl: string ="";
  public ingredients: Ingredient[] =[];
@@ -33,19 +37,19 @@ export class FoodRequest {
 }
 
 export class Ingredient {
-  id: string = '';
-  description: string = '';
-  name: string='';
-  foodid: string='';
+  public id: string = '';
+  public description: string = '';
+  public name: string='';
+  public foodid: string='';
 }
 
 export class Offer{
 
 
-  id: string = '';
-  choosen: boolean = false;
-  foodId: string='';
-  contractorId: string='';
+  public  id: string = '';
+  public choosen: boolean = false;
+  public foodId: string='';
+  public contractorId: string='';
 
 
 }
@@ -53,19 +57,20 @@ export class Offer{
 export class CommentF{
 
 
-  id: string = '';
-  text: string = '';
-  requestId: string='';
-  contractorId: string='';
+  public  id: string = '';
+  public  text: string = '';
+  public requestId: string='';
+  public contractorId: string='';
 
 }
 
 export class FoodUser{
 
 
-  id: string = '';
-  email: string = '';
-  foodUserName: string='';
-  userName: string='';
+  public  id: string = '';
+  public email: string = '';
+  public foodUserName: string='';
+  public userName: string='';
+  public founds: number=0;
 
 }
